@@ -7,7 +7,7 @@ namespace WpfApplication1
         public FunctionsArray()
         {
             array = new List<Function>();
-            Function func = new Function("x*x", (x => x * x));
+            Function func = new Function("x*x", (x => x * x), (x=>2));
             array.Add(func);
         }
 

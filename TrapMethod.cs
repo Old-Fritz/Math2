@@ -5,8 +5,15 @@ public class TrapMethod
 {
     public delegate double FuncDel(double x);
 
-    public double calculate(FuncDel f, double a, double b, double precision, out double fault, out int split)
+    public double calculate(FuncDel f, FuncDel dderivative, double a, double b, double precision, out double fault, out int split)
     {
+        if (b < a)
+        {
+            double temp = a;
+            a = b;
+            b = temp;
+        }
+        
         double S1, S2;
         split = 1;
         S2 = calcS(f, a, b, split);
@@ -17,9 +24,9 @@ public class TrapMethod
             S2 = calcS(f, a, b, split);
         } while (Math.Abs(S2-S1)>precision);
 
-        fault = 0;
+        fault = calcFault(dderivative,a,b,split);
 
-        return S2;
+        return S2+fault;
     }
 
     private double calcS(FuncDel f, double a, double b, int split)
@@ -35,5 +42,10 @@ public class TrapMethod
         }
 
         return S;
+    }
+
+    private double calcFault(FuncDel dderivative, double a, double b, int split)
+    {
+        return (-dderivative((b - a) / 2) * split * Math.Pow((b - a)/split,3)) / 12;
     }
 }

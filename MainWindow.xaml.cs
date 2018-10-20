@@ -15,7 +15,11 @@ namespace WpfApplication1
             FunctionsArray array = new FunctionsArray();
             double fault;
             int split;
-            result.Text = method.calculate(x => array.get(0).Func(x), 10,20,0.00000000001f,out fault ,out split).ToString();
+            Function f = array.get(0);
+            tresult.Text = method.calculate(x => f.Func(x), x=>f.DDerivative(x),
+                10,20,0.001f,out fault ,out split).ToString();
+            tfault.Text = fault.ToString();
+            tsplit.Text = split.ToString();
         }
     }
 }

@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <TextBox Name="result"></TextBox>
-    </Grid>
+    <StackPanel>
+        <TextBox Name="tresult"></TextBox>
+        <TextBox Name="tfault"></TextBox>
+        <TextBox Name="tsplit"></TextBox>
+    </StackPanel>
 </Window>
