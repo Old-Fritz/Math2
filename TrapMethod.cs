@@ -3,6 +3,7 @@ using System;
 
 public class TrapMethod
 {
+	// test git
     public delegate double FuncDel(double x);
 
     public double calculate(FuncDel f, FuncDel dderivative, double a, double b, double precision, out double fault, out int split)
