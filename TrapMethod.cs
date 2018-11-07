@@ -1,20 +1,11 @@
-﻿
-using System;
+﻿using System;
 
 public class TrapMethod
 {
-	// test git
     public delegate double FuncDel(double x);
 
-    public double calculate(FuncDel f, FuncDel dderivative, double a, double b, double precision, out double fault, out int split)
-    {
-        if (b < a)
-        {
-            double temp = a;
-            a = b;
-            b = temp;
-        }
-        
+    public double calculate(FuncDel f, double a, double b, double precision, out double fault, out int split)
+    {   
         double S1, S2;
         split = 1;
         S2 = calcS(f, a, b, split);
@@ -23,15 +14,16 @@ public class TrapMethod
             S1 = S2;
             split *= 2;
             S2 = calcS(f, a, b, split);
-        } while (Math.Abs(S2-S1)>precision);
+        } while (Math.Abs(S2-S1)>precision && split<10000000);
 
-        fault = calcFault(dderivative,a,b,split);
+        fault = Math.Abs(S2-S1);  // оценка Рунге
 
-        return S2+fault;
+        return S2;
     }
 
     private double calcS(FuncDel f, double a, double b, int split)
     {
+        // Вычисление площади трапеций
         double S = 0;
         double dX = (b - a) / split;
         double y1 = f(a);
@@ -43,10 +35,5 @@ public class TrapMethod
         }
 
         return S;
-    }
-
-    private double calcFault(FuncDel dderivative, double a, double b, int split)
-    {
-        return (-dderivative((b - a) / 2) * split * Math.Pow((b - a)/split,3)) / 12;
     }
 }
